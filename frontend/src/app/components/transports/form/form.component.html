@@ -1,0 +1,15 @@
+<div class="transport-form-container">
+  <h2>{{ isEdit ? 'Editar Transporte' : 'Nuevo Transporte' }}</h2>
+
+  <form (ngSubmit)="saveTransport()" #transportForm="ngForm">
+    <label for="type">Tipo de transporte:</label>
+    <input type="text" id="type" name="type" [(ngModel)]="transport.type" required placeholder="Ej. Avión, Tren, Bus..."/>
+
+    <div class="form-actions">
+      <button type="submit" [disabled]="transportForm.invalid">
+        {{ isEdit ? 'Actualizar' : 'Crear' }}
+      </button>
+      <button type="button" class="cancel" (click)="cancel()">Cancelar</button>
+    </div>
+  </form>
+</div>

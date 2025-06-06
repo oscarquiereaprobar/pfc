@@ -1,0 +1,35 @@
+<div class="users-container">
+  <div class="users-header">
+    <h2>Gestión de Usuarios</h2>
+    <button class="primary" (click)="crearUsuario()">Crear nuevo usuario</button>
+  </div>
+
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Usuario</th>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Admin</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td>{{ user.id }}</td>
+          <td>{{ user.username }}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.surname }}</td>
+          <td>{{ user.admin ? 'Sí' : 'No' }}</td>
+          <td class="actions">
+            <button class="view" (click)="verUsuario(user.id)">Ver</button>
+            <button class="edit" (click)="editarUsuario(user.id)">Editar</button>
+            <button class="delete" (click)="borrarUsuario(user.id)">Borrar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

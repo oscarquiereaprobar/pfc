@@ -1,0 +1,18 @@
+<nav class="header">
+  <div class="logo-container">
+    <img src="logo.png" alt="TravelMind Logo" class="logo-image" />
+    <span class="logo-text">TravelMind</span>
+  </div>
+
+  <div *ngIf="isLoggedIn" class="nav-links">
+    <!-- User -->
+    <button *ngIf="!isAdmin" (click)="goToUserHome()">Mis itinerarios</button>
+
+    <!-- Admin -->
+    <button *ngIf="isAdmin" (click)="goToAdminUsers()">Usuarios</button>
+    <button *ngIf="isAdmin" (click)="goToAdminTransports()">Transportes</button>
+
+    <button (click)="goToProfile()">Perfil</button>
+    <button (click)="logout()">Cerrar sesión</button>
+  </div>
+</nav>

@@ -1,0 +1,17 @@
+<div class="user-details-container">
+  <h2>Detalles del Usuario</h2>
+
+  <div class="user-details" *ngIf="user">
+    <p><strong>ID:</strong> {{ user.id }}</p>
+    <p><strong>Username:</strong> {{ user.username }}</p>
+    <p><strong>Nombre:</strong> {{ user.name }}</p>
+    <p><strong>Apellido:</strong> {{ user.surname }}</p>
+    <p><strong>{{ user.admin ? 'Es administrador' : 'Es usuario regular' }}</strong></p>
+  </div>
+
+  <div class="button-wrapper">
+    <button (click)="volver()">Volver</button>
+    <button class="edit" (click)="editar(user.id)">Editar</button>
+    <button class="delete" (click)="borrar(user.id)">Borrar</button>
+  </div>
+</div>

@@ -1,0 +1,110 @@
+<div class="trip-form-container">
+  <h2>{{ isEdit ? 'Editar Viaje' : 'Nuevo Viaje' }}</h2>
+
+  <form (ngSubmit)="save()" #tripForm="ngForm">
+    <!-- Sección Origen -->
+    <fieldset style="display: flex; gap: 2rem; flex-wrap: wrap;">
+      <legend>Origen</legend>
+
+      <div style="flex: 1; min-width: 220px;">
+        <label for="originCountry">País de origen: </label>
+        <input
+          list="originCountries"
+          [(ngModel)]="trip.originCountry"
+          (input)="onCountryInput($any($event.target).value, 'origin')"
+          name="originCountry"
+          id="originCountry"
+          required
+        />
+        <datalist id="originCountries">
+          <option *ngFor="let country of filteredOriginCountries" [value]="country"></option>
+        </datalist>
+      </div>
+
+      <div style="flex: 1; min-width: 220px;">
+        <label for="originCity">Ciudad de origen: </label>
+        <input
+          list="originCities"
+          [(ngModel)]="trip.originCity"
+          (input)="onCityInput($any($event.target).value, 'origin')"
+          name="originCity"
+          id="originCity"
+          required
+        />
+        <datalist id="originCities">
+          <option *ngFor="let city of filteredOriginCities" [value]="city"></option>
+        </datalist>
+      </div>
+    </fieldset>
+
+    <!-- Sección Destino -->
+    <fieldset style="display: flex; gap: 2rem; flex-wrap: wrap;">
+      <legend>Destino</legend>
+
+      <div style="flex: 1; min-width: 220px;">
+        <label for="destinationCountry">País de destino: </label>
+        <input
+          list="destinationCountries"
+          [(ngModel)]="trip.destinationCountry"
+          (input)="onCountryInput($any($event.target).value, 'destination')"
+          name="destinationCountry"
+          id="destinationCountry"
+          required
+        />
+        <datalist id="destinationCountries">
+          <option *ngFor="let country of filteredDestinationCountries" [value]="country"></option>
+        </datalist>
+      </div>
+
+      <div style="flex: 1; min-width: 220px;">
+        <label for="destinationCity">Ciudad de destino: </label>
+        <input
+          list="destinationCities"
+          [(ngModel)]="trip.destinationCity"
+          (input)="onCityInput($any($event.target).value, 'destination')"
+          name="destinationCity"
+          id="destinationCity"
+          required
+        />
+        <datalist id="destinationCities">
+          <option *ngFor="let city of filteredDestinationCities" [value]="city"></option>
+        </datalist>
+      </div>
+    </fieldset>
+
+    <!-- Fechas -->
+    <fieldset style="display: flex; gap: 2rem; flex-wrap: wrap;">
+      <legend>Fechas</legend>
+
+      <div style="flex: 1; min-width: 220px;">
+        <label for="startDate">Fecha de inicio: </label>
+        <input type="date" [(ngModel)]="trip.startDate" name="startDate" id="startDate" required />
+      </div>
+
+      <div style="flex: 1; min-width: 220px;">
+        <label for="finishDate">Fecha de fin: </label>
+        <input type="date" [(ngModel)]="trip.finishDate" name="finishDate" id="finishDate" required />
+      </div>
+    </fieldset>
+
+    <!-- Transporte -->
+    <label for="transport">Transporte:</label>
+    <select [(ngModel)]="trip.idTransport" name="idTransport" id="transport">
+      <option [ngValue]="null">Sin asignar</option>
+      <option *ngFor="let transport of transports" [ngValue]="transport.id">
+        {{ transport.type }}
+      </option>
+    </select>
+
+    <!-- Botones -->
+    <div class="form-actions">
+      <button type="submit" [disabled]="tripForm.invalid">
+        {{ isEdit ? 'Actualizar' : 'Crear' }}
+      </button>
+      <button type="button" (click)="cancelar()">Cancelar</button>
+    </div>
+
+    <!-- Error -->
+    <p *ngIf="error" style="color:red;">{{ error }}</p>
+  </form>
+</div>

@@ -1,0 +1,21 @@
+<div class="itinerary-form-container">
+  <h2>{{ isEdit ? 'Editar Itinerario' : 'Nuevo Itinerario' }}</h2>
+
+  <form (ngSubmit)="save()" #itineraryForm="ngForm">
+    <label for="name">Nombre:</label>
+    <input type="text" id="name" [(ngModel)]="itinerary.name" name="name" required />
+
+    <label for="startDate">Fecha de inicio:</label>
+    <input type="date" id="startDate" [(ngModel)]="itinerary.startDate" name="startDate" required />
+
+    <label for="endDate">Fecha de fin:</label>
+    <input type="date" id="endDate" [(ngModel)]="itinerary.endDate" name="endDate" required />
+
+    <div class="form-actions">
+      <button type="submit" [disabled]="itineraryForm.invalid">
+        {{ isEdit ? 'Actualizar' : 'Crear' }}
+      </button>
+      <button type="button" class="cancel" (click)="cancel()">Cancelar</button>
+    </div>
+  </form>
+</div>

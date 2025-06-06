@@ -1,0 +1,56 @@
+<div class="trips-container">
+  <h2>Viajes del Itinerario: {{ itineraryName }}</h2>
+
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Origen</th>
+          <th>Destino</th>
+          <th>Transporte</th>
+          <th>Inicio</th>
+          <th>Fin</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let trip of trips">
+          <td>{{ trip.originCity }}, {{ trip.originCountry }}</td>
+          <td>{{ trip.destinationCity }}, {{ trip.destinationCountry }}</td>
+          <td>{{ trip.transportType }}</td>
+          <td>{{ trip.startDate | date:'dd/MM/yyyy' }}</td>
+          <td>{{ trip.finishDate | date:'dd/MM/yyyy' }}</td>
+          <td>
+            <button class="edit" (click)="editar(trip.id)">Editar</button>
+            <button class="delete" (click)="borrar(trip.id)">Borrar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="comments-section">
+    <h3>Comentarios</h3>
+    <div class="comments-list">
+      <div class="comment" *ngFor="let comment of comments">
+        <div class="comment-header">
+          <span class="comment-user">{{ comment.username }}</span>
+          <span class="comment-date">{{ comment.createdAt | date:'dd/MM/yyyy HH:mm' }}</span>
+        </div>
+        <div class="comment-text">{{ comment.text }}</div>
+      </div>
+      <div *ngIf="comments.length === 0" class="no-comments">
+        No hay comentarios aún.
+      </div>
+    </div>
+    <form class="comment-form" (ngSubmit)="addComment()" #commentForm="ngForm">
+      <textarea [(ngModel)]="newComment" name="newComment" rows="2" placeholder="Añade un comentario..." required></textarea>
+      <button type="submit" [disabled]="!newComment || commentForm.invalid">Comentar</button>
+    </form>
+  </div>
+
+  <div class="actions">
+    <button (click)="volver()">Volver</button>
+    <button (click)="nuevo()">Nuevo viaje</button>
+  </div>
+</div>

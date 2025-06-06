@@ -1,0 +1,125 @@
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { TripService } from '../../../services/trip.service';
+import { ItineraryService } from '../../../services/itinerary.service';
+import { TransportService } from '../../../services/transport.service';
+import { MessageService } from '../../../services/message.service';
+import { UserService } from '../../../services/user.service';
+import { FormsModule } from '@angular/forms';
+
+@Component({
+  selector: 'app-trips',
+  standalone: true,
+  imports: [CommonModule, FormsModule],
+  templateUrl: './trips.component.html',
+  styleUrls: ['./trips.component.css'],
+})
+export class TripsComponent implements OnInit {
+  trips: any[] = [];
+  itineraryId!: number;
+  itineraryName: string = '';
+  transportCache: Map<number, string> = new Map();
+  comments: any[] = [];
+  newComment: string = '';
+
+  constructor(
+    private tripService: TripService,
+    private itineraryService: ItineraryService,
+    private transportService: TransportService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private messageService: MessageService,
+    private userService: UserService
+  ) {}
+
+  ngOnInit(): void {
+    this.itineraryId = +this.route.snapshot.paramMap.get('id')!;
+    this.itineraryService.getById(this.itineraryId).subscribe(it => {
+      this.itineraryName = it.name;
+    });
+    this.loadTrips();
+    this.loadComments();
+  }
+
+  loadTrips(): void {
+    this.tripService.getByItineraryId(this.itineraryId).subscribe({
+      next: (data) => {
+        this.trips = data.sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime());
+        this.enrichTripsWithTransportTypes();
+      },
+      error: (err) => {
+        console.error('Error al cargar viajes:', err);
+      }
+    });
+  }
+
+  enrichTripsWithTransportTypes(): void {
+    this.trips.forEach(trip => {
+      if (trip.idTransport) {
+        if (this.transportCache.has(trip.idTransport)) {
+          trip.transportType = this.transportCache.get(trip.idTransport);
+        } else {
+          this.transportService.getTransport(trip.idTransport).subscribe(transport => {
+            this.transportCache.set(trip.idTransport, transport.type);
+            trip.transportType = transport.type;
+          });
+        }
+      } else {
+        trip.transportType = 'Sin asignar';
+      }
+    });
+  }
+
+  loadComments(): void {
+    this.messageService.getByItinerary(this.itineraryId).subscribe(comments => {
+      const userIds = Array.from(new Set(comments.map((c: any) => c.idUser)));
+      const userMap: { [key: number]: string } = {};
+      Promise.all(
+        userIds.map(uid =>
+          this.userService.getUserById(uid).toPromise().then(user => {
+            userMap[uid] = user.username;
+          })
+        )
+      ).then(() => {
+        this.comments = comments.map((c: any) => ({
+          ...c,
+          username: userMap[c.idUser] || c.idUser
+        }));
+      });
+    });
+  }
+
+  addComment(): void {
+    if (!this.newComment) return;
+    const userId = Number(sessionStorage.getItem('id'));
+    this.messageService.create({
+      text: this.newComment,
+      idItinerary: this.itineraryId,
+      idUser: userId
+    }).subscribe(() => {
+      this.newComment = '';
+      this.loadComments();
+    });
+  }
+
+  volver(): void {
+    this.router.navigate([`/itineraries/`]);
+  }
+
+  nuevo(): void {
+    this.router.navigate([`/itineraries/${this.itineraryId}/trips/add`]);
+  }
+
+  editar(id: number): void {
+    this.router.navigate([`itineraries/${this.itineraryId}/trips/edit/${id}`]);
+  }
+
+  borrar(id: number): void {
+    if (confirm('¿Deseas borrar este viaje?')) {
+      this.tripService.delete(id).subscribe(() => {
+        this.trips = this.trips.filter(t => t.id !== id);
+      });
+    }
+  }
+}

@@ -1,0 +1,28 @@
+<div class="user-form-container">
+  <h2>{{ isEdit ? 'Editar Usuario' : 'Crear Usuario' }}</h2>
+
+  <form (ngSubmit)="saveUser()" #userForm="ngForm" novalidate>
+    <label>Username:</label>
+    <input [(ngModel)]="user.username" type="text" name="username" required />
+
+    <label>Nombre:</label>
+    <input [(ngModel)]="user.name" type="text" name="name" required />
+
+    <label>Apellido:</label>
+    <input [(ngModel)]="user.surname" type="text" name="surname" required />
+
+    <label *ngIf="!isEdit">Contraseña:</label>
+    <input *ngIf="!isEdit" type="password" [(ngModel)]="user.password" name="password" required />
+
+    <label class="checkbox-label">
+      ¿Administrador? <input type="checkbox" [(ngModel)]="user.admin" name="admin" />
+    </label>
+
+    <div class="form-actions">
+      <button type="submit" [disabled]="userForm.invalid"> {{ isEdit ? 'Actualizar' : 'Crear' }} </button>
+      <button type="button" class="cancel" (click)="cancel()">Cancelar</button>
+    </div>
+
+    <p *ngIf="error" class="error">{{ error }}</p>
+  </form>
+</div>

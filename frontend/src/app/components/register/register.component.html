@@ -1,0 +1,26 @@
+<div class="register-wrapper">
+  <div class="register-form-container">
+    <a class="back-arrow" routerLink="/">
+      &#8592;
+    </a>
+    <h2>Registrarse</h2>
+    <form (ngSubmit)="registro()" #registerForm="ngForm">
+      <label for="username">Username:</label>
+      <input type="text" id="username" [(ngModel)]="usuario.username" name="username" required>
+
+      <label for="name">Name:</label>
+      <input type="text" id="name" [(ngModel)]="usuario.name" name="name" required>
+
+      <label for="surname">Surname:</label>
+      <input type="text" id="surname" [(ngModel)]="usuario.surname" name="surname" required>
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" [(ngModel)]="usuario.password" name="password" required>
+
+      <button type="submit" [disabled]="registerForm.invalid">Registrarse</button>
+    </form>
+    <p class="link-text">
+      ¿Ya tienes cuenta? <a routerLink="/login">Inicia sesión</a>
+    </p>
+  </div>
+</div>

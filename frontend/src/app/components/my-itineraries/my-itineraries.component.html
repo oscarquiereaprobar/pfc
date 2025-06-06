@@ -1,0 +1,45 @@
+<div class="itineraries-container">
+  <div class="top-bar">
+    <h1>Mis Itinerarios</h1>
+    <button class="add-button" (click)="nuevo()">+ Nuevo</button>
+  </div>
+
+  <div *ngIf="itineraries.length === 0" class="empty-message">
+    Todavía no tienes itinerarios creados.<br>¡Empieza a planificar tu próxima aventura!
+  </div>
+
+  <div class="itinerary-grid" *ngIf="itineraries.length > 0">
+    <div class="itinerary-card" *ngFor="let itinerary of itineraries">
+      <div class="card-header">
+        <h2>{{ itinerary.name }}</h2>
+        <span class="date">{{ itinerary.startDate | date:'dd/MM/yyyy' }} → {{ itinerary.endDate | date:'dd/MM/yyyy' }}</span>
+      </div>
+      <div class="card-actions">
+        <button (click)="verViajes(itinerary.id)">Detalles</button>
+        <button (click)="editar(itinerary.id)">Editar</button>
+        <button class="danger" (click)="borrar(itinerary.id)">Borrar</button>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin: 2rem 0;"></div>
+
+  <div class="top-bar">
+    <h1>Itinerarios Públicos</h1>
+  </div>
+
+  <input class="filter-input" type="text" [(ngModel)]="filter" (input)="onFilterInput()" placeholder="Filtrar por nombre..."/>
+
+  <div class="itinerary-grid">
+    <div class="itinerary-card" *ngFor="let itinerary of filteredPublicItineraries">
+      <div class="card-header">
+        <h2>{{ itinerary.name }}</h2>
+        <span class="date">Usuario: {{ itinerary.username }}</span>
+        <span class="date">{{ itinerary.startDate | date:'dd/MM/yyyy' }} → {{ itinerary.endDate | date:'dd/MM/yyyy' }}</span>
+      </div>
+      <div class="card-actions">
+        <button (click)="verViajes(itinerary.id)">Detalles</button>
+      </div>
+    </div>
+  </div>
+</div>
