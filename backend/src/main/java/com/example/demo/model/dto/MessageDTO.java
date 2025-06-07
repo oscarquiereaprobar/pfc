@@ -19,7 +19,7 @@ public class MessageDTO {
 
 	private Long id;
 	private String text;
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
     private Long itineraryId;
     private Long userId;
 	
@@ -29,7 +29,7 @@ public class MessageDTO {
                 .text(message.getText())
                 .itineraryId(message.getItinerary().getId())
                 .userId(message.getUser().getId())
-                .created_at(message.getCreated_at())
+                .createdAt(message.getCreatedAt())
                 .build();
     }
 
@@ -39,7 +39,7 @@ public class MessageDTO {
                 .text(dto.getText())
                 .itinerary(itinerary)
                 .user(user)
-                .created_at(dto.getCreated_at() != null ? dto.getCreated_at() : LocalDateTime.now())
+                .createdAt(dto.getCreatedAt())
                 .build();
     }
     

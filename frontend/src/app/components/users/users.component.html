@@ -1,7 +1,9 @@
 <div class="users-container">
   <div class="users-header">
     <h2>Gestión de Usuarios</h2>
-    <button class="primary" (click)="crearUsuario()">Crear nuevo usuario</button>
+    <button class="primary" (click)="crearUsuario()">
+      <span class="material-icons" aria-hidden="true" style="font-size:18px;vertical-align:-4px;">add</span> Crear nuevo usuario
+    </button>
   </div>
 
   <div class="table-wrapper">
@@ -24,9 +26,15 @@
           <td>{{ user.surname }}</td>
           <td>{{ user.admin ? 'Sí' : 'No' }}</td>
           <td class="actions">
-            <button class="view" (click)="verUsuario(user.id)">Ver</button>
-            <button class="edit" (click)="editarUsuario(user.id)">Editar</button>
-            <button class="delete" (click)="borrarUsuario(user.id)">Borrar</button>
+            <button class="view" (click)="verUsuario(user.id)">
+              <span class="material-icons" aria-hidden="true" style="font-size:18px;vertical-align:-4px;">visibility</span> Ver
+            </button>
+            <button class="edit" (click)="editarUsuario(user.id)">
+              <span class="material-icons" aria-hidden="true" style="font-size:18px;vertical-align:-4px;">edit</span> Editar
+            </button>
+            <button class="delete" (click)="borrarUsuario(user.id)">
+              <span class="material-icons" aria-hidden="true" style="font-size:18px;vertical-align:-4px;">delete</span> Borrar
+            </button>
           </td>
         </tr>
       </tbody>

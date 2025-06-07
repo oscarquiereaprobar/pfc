@@ -15,7 +15,10 @@
       {{ user.admin ? 'Eres administrador' : 'Eres usuario' }}
     </label>
 
-    <button type="submit" [disabled]="form.invalid">Actualizar</button>
+    <button type="submit" [disabled]="form.invalid">
+      <span class="material-icons" aria-hidden="true" style="font-size:18px;vertical-align:-4px;">edit</span>
+      Actualizar
+    </button>
   </form>
 
   <hr />
@@ -28,6 +31,9 @@
     <label>Nueva contraseña:</label>
     <input type="password" [(ngModel)]="newPassword" name="newPassword" required>
 
-    <button type="submit" [disabled]="passForm.invalid">Actualizar</button>
+    <button type="submit" [disabled]="passForm.invalid">
+      <span class="material-icons" aria-hidden="true" style="font-size:18px;vertical-align:-4px;">edit</span>
+      Actualizar
+    </button>
   </form>
 </div>

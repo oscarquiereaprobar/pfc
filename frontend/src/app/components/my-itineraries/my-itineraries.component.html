@@ -1,7 +1,9 @@
 <div class="itineraries-container">
   <div class="top-bar">
     <h1>Mis Itinerarios</h1>
-    <button class="add-button" (click)="nuevo()">+ Nuevo</button>
+    <button class="add-button" (click)="nuevo()">
+      <span class="material-icons" aria-hidden="true" style="font-size:18px;vertical-align:-4px;">add</span> Nuevo
+    </button>
   </div>
 
   <div *ngIf="itineraries.length === 0" class="empty-message">
@@ -15,9 +17,15 @@
         <span class="date">{{ itinerary.startDate | date:'dd/MM/yyyy' }} → {{ itinerary.endDate | date:'dd/MM/yyyy' }}</span>
       </div>
       <div class="card-actions">
-        <button (click)="verViajes(itinerary.id)">Detalles</button>
-        <button (click)="editar(itinerary.id)">Editar</button>
-        <button class="danger" (click)="borrar(itinerary.id)">Borrar</button>
+        <button (click)="verViajes(itinerary.id)">
+          <span class="material-icons" aria-hidden="true" style="font-size:18px;vertical-align:-4px;">visibility</span> Detalles
+        </button>
+        <button (click)="editar(itinerary.id)">
+          <span class="material-icons" aria-hidden="true" style="font-size:18px;vertical-align:-4px;">edit</span> Editar
+        </button>
+        <button class="danger" (click)="borrar(itinerary.id)">
+          <span class="material-icons" aria-hidden="true" style="font-size:18px;vertical-align:-4px;">delete</span> Borrar
+        </button>
       </div>
     </div>
   </div>
@@ -38,7 +46,9 @@
         <span class="date">{{ itinerary.startDate | date:'dd/MM/yyyy' }} → {{ itinerary.endDate | date:'dd/MM/yyyy' }}</span>
       </div>
       <div class="card-actions">
-        <button (click)="verViajes(itinerary.id)">Detalles</button>
+        <button (click)="verViajes(itinerary.id)">
+          <span class="material-icons" aria-hidden="true" style="font-size:18px;vertical-align:-3px;">visibility</span> Detalles
+        </button>
       </div>
     </div>
   </div>

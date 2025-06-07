@@ -10,8 +10,14 @@
   </div>
 
   <div class="button-wrapper">
-    <button (click)="volver()">Volver</button>
-    <button class="edit" (click)="editar(user.id)">Editar</button>
-    <button class="delete" (click)="borrar(user.id)">Borrar</button>
+    <button (click)="volver()">
+      <span class="material-icons" aria-hidden="true" style="font-size:18px;vertical-align:-3px;">arrow_back</span> Volver
+    </button>
+    <button class="edit" (click)="editar(user.id)">
+      <span class="material-icons" aria-hidden="true" style="font-size:18px;vertical-align:-3px;">edit</span> Editar
+    </button>
+    <button class="delete" (click)="borrar(user.id)">
+      <span class="material-icons" aria-hidden="true" style="font-size:18px;vertical-align:-3px;">delete</span> Borrar
+    </button>
   </div>
 </div>

@@ -7,9 +7,15 @@
 
     <div class="form-actions">
       <button type="submit" [disabled]="transportForm.invalid">
+        <span class="material-icons" aria-hidden="true" style="font-size:18px;vertical-align:-3px;">
+          {{ isEdit ? 'edit' : 'add' }}
+        </span>
         {{ isEdit ? 'Actualizar' : 'Crear' }}
       </button>
-      <button type="button" class="cancel" (click)="cancel()">Cancelar</button>
+      <button type="button" class="cancel" (click)="cancel()">
+        <span class="material-icons" aria-hidden="true" style="font-size:18px;vertical-align:-3px;">arrow_back</span>
+        Cancelar
+      </button>
     </div>
   </form>
 </div>

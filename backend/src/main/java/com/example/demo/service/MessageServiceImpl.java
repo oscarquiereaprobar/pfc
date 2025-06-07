@@ -31,6 +31,9 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public MessageDTO createMessage(MessageDTO dto) {
+        if (dto.getItineraryId() == null || dto.getUserId() == null) {
+            throw new IllegalArgumentException("ItineraryId and UserId must not be null");
+        }
         Itinerary itinerary = itineraryRepository.findById(dto.getItineraryId())
                 .orElseThrow(() -> new RuntimeException("Itinerario no encontrado"));
 

@@ -22,6 +22,8 @@ export class TripsComponent implements OnInit {
   transportCache: Map<number, string> = new Map();
   comments: any[] = [];
   newComment: string = '';
+  isOwner: boolean = false;
+  userId: number = 0;
 
   constructor(
     private tripService: TripService,
@@ -35,8 +37,10 @@ export class TripsComponent implements OnInit {
 
   ngOnInit(): void {
     this.itineraryId = +this.route.snapshot.paramMap.get('id')!;
+    this.userId = Number(sessionStorage.getItem('id'));
     this.itineraryService.getById(this.itineraryId).subscribe(it => {
       this.itineraryName = it.name;
+      this.isOwner = it.idUser === this.userId;
     });
     this.loadTrips();
     this.loadComments();
@@ -73,7 +77,8 @@ export class TripsComponent implements OnInit {
 
   loadComments(): void {
     this.messageService.getByItinerary(this.itineraryId).subscribe(comments => {
-      const userIds = Array.from(new Set(comments.map((c: any) => c.idUser)));
+      const userIds = Array.from(new Set(comments.map((c: any) => c.userId)))
+        .filter(uid => uid !== undefined && uid !== null);
       const userMap: { [key: number]: string } = {};
       Promise.all(
         userIds.map(uid =>
@@ -84,7 +89,7 @@ export class TripsComponent implements OnInit {
       ).then(() => {
         this.comments = comments.map((c: any) => ({
           ...c,
-          username: userMap[c.idUser] || c.idUser
+          username: userMap[c.userId] || c.userId
         }));
       });
     });
@@ -94,13 +99,21 @@ export class TripsComponent implements OnInit {
     if (!this.newComment) return;
     const userId = Number(sessionStorage.getItem('id'));
     this.messageService.create({
-      text: this.newComment,
-      idItinerary: this.itineraryId,
-      idUser: userId
-    }).subscribe(() => {
+    text: this.newComment,
+    itineraryId: this.itineraryId,
+    userId: userId
+  }).subscribe(() => {
       this.newComment = '';
       this.loadComments();
     });
+  }
+
+  deleteComment(commentId: number): void {
+    if (confirm('¿Deseas borrar este mensaje?')) {
+      this.messageService.delete(commentId).subscribe(() => {
+        this.loadComments();
+      });
+    }
   }
 
   volver(): void {

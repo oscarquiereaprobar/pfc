@@ -15,7 +15,11 @@ export class MessageService {
     return this.http.get<any[]>(`${this.apiUrl}/itinerary/${itineraryId}`);
   }
 
-  create(message: { text: string, idItinerary: number, idUser: number }): Observable<any> {
+  create(message: { text: string, itineraryId: number, userId: number }): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}`, message);
+  }
+
+  delete(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/${id}`);
   }
 }
