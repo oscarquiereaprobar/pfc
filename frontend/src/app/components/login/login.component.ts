@@ -3,6 +3,7 @@ import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -24,25 +25,29 @@ export class LoginComponent {
 
   login(): void {
     this.authService.login(this.username, this.password).subscribe({
-    next: (response: any) => {
+      next: (response: any) => {
+        sessionStorage.setItem('id', response.id);
+        sessionStorage.setItem('username', response.username);
+        sessionStorage.setItem('rol', response.admin);
 
-      sessionStorage.setItem('id', response.id);
-      sessionStorage.setItem('username', response.username);
-      sessionStorage.setItem('rol', response.admin);
-
-      if (sessionStorage.getItem('rol') === 'true') {
-        this.router.navigate(['/users']).then(() => {
-          window.location.reload();
+        if (sessionStorage.getItem('rol') === 'true') {
+          this.router.navigate(['/users']).then(() => {
+            window.location.reload();
+          });
+        } else {
+          this.router.navigate(['/itineraries']).then(() => {
+            window.location.reload();
+          });
+        }
+      },
+      error: () => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Credenciales inválidas. Intente nuevamente.'
         });
-      } else {
-        this.router.navigate(['/itineraries']).then(() => {
-          window.location.reload();
-        });
+        this.error = 'Credenciales inválidas. Intente nuevamente.';
       }
-    },
-    error: () => {
-      this.error = 'Credenciales inválidas. Intente nuevamente.';
-    }
     });
   }
 }

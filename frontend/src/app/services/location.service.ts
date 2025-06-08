@@ -9,7 +9,7 @@ export class LocationService {
   constructor(private http: HttpClient) {}
 
   getCountries(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/countries/positions`);
+    return this.http.get(`${this.apiUrl}/countries`);
   }
 
   getCities(country: string): Observable<any> {

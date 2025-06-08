@@ -101,3 +101,11 @@ button:hover:not(:disabled) {
 .back-arrow:hover {
   color: #007BFF;
 }
+
+.error {
+  color: #e53935;
+  font-size: 0.97em;
+  margin-top: 0.3em;
+  margin-bottom: 0.2em;
+  padding-left: 0.2em;
+}

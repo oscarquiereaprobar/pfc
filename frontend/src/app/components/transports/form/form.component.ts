@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TransportService } from '../../../services/transport.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-transport-form',
@@ -37,8 +38,24 @@ export class TransportFormComponent implements OnInit {
       : this.transportService.createTransport(this.transport);
 
     req.subscribe({
-      next: () => this.router.navigate(['/transports']),
-      error: (err) => console.error('Error guardando transporte:', err)
+      next: () => {
+        Swal.fire({
+          icon: 'success',
+          title: this.isEdit ? 'Actualizado' : 'Creado',
+          text: this.isEdit ? 'Transporte actualizado correctamente' : 'Transporte creado correctamente',
+          timer: 1500,
+          showConfirmButton: false
+        });
+        this.router.navigate(['/transports']);
+      },
+      error: (err) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Error guardando transporte'
+        });
+        console.error('Error guardando transporte:', err);
+      }
     });
   }
 

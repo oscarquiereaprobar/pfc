@@ -6,16 +6,28 @@
     <h2>Registrarse</h2>
     <form (ngSubmit)="registro()" #registerForm="ngForm">
       <label for="username">Username:</label>
-      <input type="text" id="username" [(ngModel)]="usuario.username" name="username" required>
+      <input type="text" id="username" [(ngModel)]="usuario.username" name="username" required #username="ngModel">
+      <div *ngIf="username.invalid && (username.dirty || username.touched)" class="error">
+        <span *ngIf="username.errors?.['required']">El nombre de usuario es obligatorio.</span>
+      </div>
 
       <label for="name">Name:</label>
-      <input type="text" id="name" [(ngModel)]="usuario.name" name="name" required>
+      <input type="text" id="name" [(ngModel)]="usuario.name" name="name" required #name="ngModel">
+      <div *ngIf="name.invalid && (name.dirty || name.touched)" class="error">
+        <span *ngIf="name.errors?.['required']">El nombre es obligatorio.</span>
+      </div>
 
       <label for="surname">Surname:</label>
-      <input type="text" id="surname" [(ngModel)]="usuario.surname" name="surname" required>
+      <input type="text" id="surname" [(ngModel)]="usuario.surname" name="surname" required #surname="ngModel">
+      <div *ngIf="surname.invalid && (surname.dirty || surname.touched)" class="error">
+        <span *ngIf="surname.errors?.['required']">El apellido es obligatorio.</span>
+      </div>
 
       <label for="password">Password:</label>
-      <input type="password" id="password" [(ngModel)]="usuario.password" name="password" required>
+      <input type="password" id="password" [(ngModel)]="usuario.password" name="password" required #password="ngModel">
+      <div *ngIf="password.invalid && (password.dirty || password.touched)" class="error">
+        <span *ngIf="password.errors?.['required']">La contraseña es obligatoria.</span>
+      </div>
 
       <button type="submit" [disabled]="registerForm.invalid">Registrarse</button>
     </form>

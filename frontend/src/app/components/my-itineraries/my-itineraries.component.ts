@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ItineraryService } from '../../services/itinerary.service';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../../services/user.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-my-itineraries',
@@ -24,7 +25,6 @@ export class MyItinerariesComponent implements OnInit {
     const userId = sessionStorage.getItem('id');
     if (userId) {
       this.itineraryService.getByUser(userId).subscribe((data) => {
-        // Ordena los itinerarios propios de más nuevo a más viejo
         this.itineraries = [...data].sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime());
       });
 
@@ -72,11 +72,27 @@ export class MyItinerariesComponent implements OnInit {
   }
 
   borrar(id: number): void {
-    if (confirm('¿Estás seguro de que deseas borrar este itinerario?')) {
-      this.itineraryService.delete(id).subscribe(() => {
-        this.itineraries = this.itineraries.filter(i => i.id !== id);
-        this.filterPublicItineraries();
-      });
-    }
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: '¿Deseas borrar este itinerario?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, borrar',
+      cancelButtonText: 'Cancelar'
+    }).then(result => {
+      if (result.isConfirmed) {
+        this.itineraryService.delete(id).subscribe(() => {
+          this.itineraries = this.itineraries.filter(i => i.id !== id);
+          this.filterPublicItineraries();
+          Swal.fire({
+            icon: 'success',
+            title: 'Eliminado',
+            text: 'Itinerario borrado correctamente',
+            timer: 1500,
+            showConfirmButton: false
+          });
+        });
+      }
+    });
   }
 }

@@ -1,6 +1,6 @@
 .profile-container {
   max-width: 500px;
-  margin: 2vh auto 2vh auto; /* menor margen arriba y abajo */
+  margin: 2vh auto 2vh auto;
   padding: 2rem 2.5rem;
   background-color: #fff;
   border-radius: 10px;
@@ -89,9 +89,17 @@ hr {
   color: #1e8449;
 }
 
+.error {
+  color: #e53935;
+  font-size: 0.97em;
+  margin-top: 0.3em;
+  margin-bottom: 0.2em;
+  padding-left: 0.2em;
+}
+
 @media (max-width: 600px) {
   .profile-container {
-    margin: 1vh 1rem 1vh 1rem; /* menor margen en móvil */
+    margin: 1vh 1rem 1vh 1rem;
     padding: 1.5rem;
   }
 }

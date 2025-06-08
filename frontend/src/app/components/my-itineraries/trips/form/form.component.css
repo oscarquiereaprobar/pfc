@@ -91,6 +91,14 @@ p[style*="color:red"] {
   font-size: 0.95rem;
 }
 
+.error {
+  color: #e53935;
+  font-size: 0.97em;
+  margin-top: 0.3em;
+  margin-bottom: 0.2em;
+  padding-left: 0.2em;
+}
+
 @media (max-width: 600px) {
   .trip-form-container {
     padding: 1.5rem;

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../../services/user.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-view-user',
@@ -45,12 +46,34 @@ export class UserViewComponent implements OnInit {
   }
 
   borrar(id: number): void {
-    this.userService.deleteUser(id).subscribe({
-      next: () => {
-        this.router.navigate(['/users']);
-      },
-      error: (err) => {
-        console.error('Error borrando el usuario:', err);
+    Swal.fire({
+      title: '¿Deseas borrar este usuario?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, borrar',
+      cancelButtonText: 'Cancelar'
+    }).then(result => {
+      if (result.isConfirmed) {
+        this.userService.deleteUser(id).subscribe({
+          next: () => {
+            Swal.fire({
+              icon: 'success',
+              title: 'Eliminado',
+              text: 'Usuario borrado correctamente',
+              timer: 1500,
+              showConfirmButton: false
+            });
+            this.router.navigate(['/users']);
+          },
+          error: (err) => {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'Error borrando el usuario'
+            });
+            console.error('Error borrando el usuario:', err);
+          }
+        });
       }
     });
   }

@@ -15,10 +15,14 @@
           name="originCountry"
           id="originCountry"
           required
+          #originCountry="ngModel"
         />
         <datalist id="originCountries">
           <option *ngFor="let country of filteredOriginCountries" [value]="country"></option>
         </datalist>
+        <div *ngIf="originCountry.invalid && (originCountry.dirty || originCountry.touched)" class="error">
+          <span *ngIf="originCountry.errors?.['required']">El país de origen es obligatorio.</span>
+        </div>
       </div>
 
       <div style="flex: 1; min-width: 220px;">
@@ -30,10 +34,14 @@
           name="originCity"
           id="originCity"
           required
+          #originCity="ngModel"
         />
         <datalist id="originCities">
           <option *ngFor="let city of filteredOriginCities" [value]="city"></option>
         </datalist>
+        <div *ngIf="originCity.invalid && (originCity.dirty || originCity.touched)" class="error">
+          <span *ngIf="originCity.errors?.['required']">La ciudad de origen es obligatoria.</span>
+        </div>
       </div>
     </fieldset>
 
@@ -50,10 +58,14 @@
           name="destinationCountry"
           id="destinationCountry"
           required
+          #destinationCountry="ngModel"
         />
         <datalist id="destinationCountries">
           <option *ngFor="let country of filteredDestinationCountries" [value]="country"></option>
         </datalist>
+        <div *ngIf="destinationCountry.invalid && (destinationCountry.dirty || destinationCountry.touched)" class="error">
+          <span *ngIf="destinationCountry.errors?.['required']">El país de destino es obligatorio.</span>
+        </div>
       </div>
 
       <div style="flex: 1; min-width: 220px;">
@@ -65,10 +77,14 @@
           name="destinationCity"
           id="destinationCity"
           required
+          #destinationCity="ngModel"
         />
         <datalist id="destinationCities">
           <option *ngFor="let city of filteredDestinationCities" [value]="city"></option>
         </datalist>
+        <div *ngIf="destinationCity.invalid && (destinationCity.dirty || destinationCity.touched)" class="error">
+          <span *ngIf="destinationCity.errors?.['required']">La ciudad de destino es obligatoria.</span>
+        </div>
       </div>
     </fieldset>
 
@@ -78,27 +94,38 @@
 
       <div style="flex: 1; min-width: 220px;">
         <label for="startDate">Fecha de inicio: </label>
-        <input type="date" [(ngModel)]="trip.startDate" name="startDate" id="startDate" required />
+        <input type="date" [(ngModel)]="trip.startDate" name="startDate" id="startDate" required #startDate="ngModel" />
+        <div *ngIf="startDate.invalid && (startDate.dirty || startDate.touched)" class="error">
+          <span *ngIf="startDate.errors?.['required']">La fecha de inicio es obligatoria.</span>
+        </div>
       </div>
 
       <div style="flex: 1; min-width: 220px;">
         <label for="finishDate">Fecha de fin: </label>
-        <input type="date" [(ngModel)]="trip.finishDate" name="finishDate" id="finishDate" required />
+        <input type="date" [(ngModel)]="trip.finishDate" name="finishDate" id="finishDate" required #finishDate="ngModel" />
+        <div *ngIf="finishDate.invalid && (finishDate.dirty || finishDate.touched)" class="error">
+          <span *ngIf="finishDate.errors?.['required']">La fecha de fin es obligatoria.</span>
+        </div>
+        <div *ngIf="trip.finishDate && trip.startDate && trip.finishDate < trip.startDate" class="error">
+          La fecha de fin debe ser posterior a la de inicio.
+        </div>
       </div>
     </fieldset>
 
     <!-- Transporte -->
     <label for="transport">Transporte:</label>
-    <select [(ngModel)]="trip.idTransport" name="idTransport" id="transport">
-      <option [ngValue]="null">Sin asignar</option>
+    <select [(ngModel)]="trip.idTransport" name="idTransport" id="transport" required #idTransport="ngModel">
       <option *ngFor="let transport of transports" [ngValue]="transport.id">
         {{ transport.type }}
       </option>
     </select>
+    <div *ngIf="idTransport.invalid && (idTransport.dirty || idTransport.touched)" class="error">
+      <span *ngIf="idTransport.errors?.['required']">El transporte es obligatorio.</span>
+    </div>
 
     <!-- Botones -->
-    <div class="form-actions">
-      <button type="submit" [disabled]="tripForm.invalid">
+    <div class="form-actions" *ngIf="isOwner">
+      <button type="submit" [disabled]="tripForm.invalid || (trip.finishDate && trip.startDate && trip.finishDate < trip.startDate)">
         <span class="material-icons" aria-hidden="true" style="font-size:18px;vertical-align:-4px;">
           {{ isEdit ? 'edit' : 'add' }}
         </span>
@@ -110,7 +137,6 @@
       </button>
     </div>
 
-    <!-- Error -->
     <p *ngIf="error" style="color:red;">{{ error }}</p>
   </form>
 </div>

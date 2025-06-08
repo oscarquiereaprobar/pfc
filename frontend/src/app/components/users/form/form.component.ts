@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../../../services/user.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-user-form',
@@ -44,13 +45,45 @@ export class UserFormComponent implements OnInit {
   saveUser(): void {
     if (this.isEdit && this.userId !== null) {
       this.userService.updateUser(this.userId, this.user).subscribe({
-        next: () => this.router.navigate(['/users']),
-        error: (err) => this.error = 'Error al actualizar usuario'
+        next: () => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Actualizado',
+            text: 'Usuario actualizado correctamente',
+            timer: 1500,
+            showConfirmButton: false
+          });
+          this.router.navigate(['/users']);
+        },
+        error: (err) => {
+          this.error = 'Error al actualizar usuario';
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Error al actualizar usuario'
+          });
+        }
       });
     } else {
       this.userService.createUser(this.user).subscribe({
-        next: () => this.router.navigate(['/users']),
-        error: (err) => this.error = 'Error al crear usuario'
+        next: () => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Creado',
+            text: 'Usuario creado correctamente',
+            timer: 1500,
+            showConfirmButton: false
+          });
+          this.router.navigate(['/users']);
+        },
+        error: (err) => {
+          this.error = 'Error al crear usuario';
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Error al crear usuario'
+          });
+        }
       });
     }
   }

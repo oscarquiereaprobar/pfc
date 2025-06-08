@@ -3,13 +3,22 @@
 
   <form class="profile-form" (ngSubmit)="updateProfile()" #form="ngForm">
     <label>Nombre:</label>
-    <input type="text" [(ngModel)]="user.name" name="name" required>
+    <input type="text" [(ngModel)]="user.name" name="name" required #name="ngModel">
+    <div *ngIf="name.invalid && (name.dirty || name.touched)" class="error">
+      <span *ngIf="name.errors?.['required']">El nombre es obligatorio.</span>
+    </div>
 
     <label>Apellido:</label>
-    <input type="text" [(ngModel)]="user.surname" name="surname" required>
+    <input type="text" [(ngModel)]="user.surname" name="surname" required #surname="ngModel">
+    <div *ngIf="surname.invalid && (surname.dirty || surname.touched)" class="error">
+      <span *ngIf="surname.errors?.['required']">El apellido es obligatorio.</span>
+    </div>
 
     <label>Username:</label>
-    <input type="text" [(ngModel)]="user.username" name="username" required>
+    <input type="text" [(ngModel)]="user.username" name="username" required #username="ngModel">
+    <div *ngIf="username.invalid && (username.dirty || username.touched)" class="error">
+      <span *ngIf="username.errors?.['required']">El nombre de usuario es obligatorio.</span>
+    </div>
 
     <label>
       {{ user.admin ? 'Eres administrador' : 'Eres usuario' }}

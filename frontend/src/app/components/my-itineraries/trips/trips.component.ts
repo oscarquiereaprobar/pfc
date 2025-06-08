@@ -7,6 +7,7 @@ import { TransportService } from '../../../services/transport.service';
 import { MessageService } from '../../../services/message.service';
 import { UserService } from '../../../services/user.service';
 import { FormsModule } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-trips',
@@ -109,11 +110,26 @@ export class TripsComponent implements OnInit {
   }
 
   deleteComment(commentId: number): void {
-    if (confirm('¿Deseas borrar este mensaje?')) {
-      this.messageService.delete(commentId).subscribe(() => {
-        this.loadComments();
-      });
-    }
+    Swal.fire({
+      title: '¿Deseas borrar este mensaje?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, borrar',
+      cancelButtonText: 'Cancelar'
+    }).then(result => {
+      if (result.isConfirmed) {
+        this.messageService.delete(commentId).subscribe(() => {
+          this.loadComments();
+          Swal.fire({
+            icon: 'success',
+            title: 'Eliminado',
+            text: 'Mensaje borrado correctamente',
+            timer: 1500,
+            showConfirmButton: false
+          });
+        });
+      }
+    });
   }
 
   volver(): void {
@@ -129,10 +145,25 @@ export class TripsComponent implements OnInit {
   }
 
   borrar(id: number): void {
-    if (confirm('¿Deseas borrar este viaje?')) {
-      this.tripService.delete(id).subscribe(() => {
-        this.trips = this.trips.filter(t => t.id !== id);
-      });
-    }
+    Swal.fire({
+      title: '¿Deseas borrar este viaje?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, borrar',
+      cancelButtonText: 'Cancelar'
+    }).then(result => {
+      if (result.isConfirmed) {
+        this.tripService.delete(id).subscribe(() => {
+          this.trips = this.trips.filter(t => t.id !== id);
+          Swal.fire({
+            icon: 'success',
+            title: 'Eliminado',
+            text: 'Viaje borrado correctamente',
+            timer: 1500,
+            showConfirmButton: false
+          });
+        });
+      }
+    });
   }
 }

@@ -4,6 +4,7 @@ import { OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ItineraryService } from '../../../services/itinerary.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-itinerary-form',
@@ -33,10 +34,20 @@ export class ItineraryFormComponent implements OnInit {
 
     if (id) {
       this.isEdit = true;
-      this.itineraryService.getById(+id).subscribe(i => this.itinerary = i);
+      this.itineraryService.getById(+id).subscribe(i => {
+        if (i.idUser !== this.userId) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Acceso denegado',
+            text: 'No tienes permiso para editar este itinerario.'
+          });
+          this.router.navigate(['/itineraries']);
+        } else {
+          this.itinerary = i;
+        }
+      });
     }
   }
-
 
   save(): void {
     const req = this.isEdit
@@ -44,8 +55,24 @@ export class ItineraryFormComponent implements OnInit {
       : this.itineraryService.create(this.userId, this.itinerary);
 
     req.subscribe({
-      next: () => this.router.navigate(['/itineraries']),
-      error: err => console.error('Error al guardar itinerario:', err)
+      next: () => {
+        Swal.fire({
+          icon: 'success',
+          title: this.isEdit ? 'Actualizado' : 'Creado',
+          text: this.isEdit ? 'Itinerario actualizado correctamente' : 'Itinerario creado correctamente',
+          timer: 1500,
+          showConfirmButton: false
+        });
+        this.router.navigate(['/itineraries']);
+      },
+      error: err => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Error al guardar itinerario'
+        });
+        console.error('Error al guardar itinerario:', err);
+      }
     });
   }
 

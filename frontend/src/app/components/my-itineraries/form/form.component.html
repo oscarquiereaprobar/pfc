@@ -3,17 +3,30 @@
 
   <form (ngSubmit)="save()" #itineraryForm="ngForm">
     <label for="name">Nombre:</label>
-    <input type="text" id="name" [(ngModel)]="itinerary.name" name="name" required />
+    <input type="text" id="name" [(ngModel)]="itinerary.name" name="name" required #name="ngModel" />
+    <div *ngIf="name.invalid && (name.dirty || name.touched)" class="error">
+      <span *ngIf="name.errors?.['required']">El nombre es obligatorio.</span>
+    </div>
 
     <label for="startDate">Fecha de inicio:</label>
-    <input type="date" id="startDate" [(ngModel)]="itinerary.startDate" name="startDate" required />
+    <input type="date" id="startDate" [(ngModel)]="itinerary.startDate" name="startDate" required #startDate="ngModel" />
+    <div *ngIf="startDate.invalid && (startDate.dirty || startDate.touched)" class="error">
+      <span *ngIf="startDate.errors?.['required']">La fecha de inicio es obligatoria.</span>
+    </div>
 
     <label for="endDate">Fecha de fin:</label>
-    <input type="date" id="endDate" [(ngModel)]="itinerary.endDate" name="endDate" required />
+    <input type="date" id="endDate" [(ngModel)]="itinerary.endDate" name="endDate" required #endDate="ngModel" />
+    <div *ngIf="endDate.invalid && (endDate.dirty || endDate.touched)" class="error">
+      <span *ngIf="endDate.errors?.['required']">La fecha de fin es obligatoria.</span>
+    </div>
+    <div *ngIf="itinerary.endDate && itinerary.startDate && itinerary.endDate < itinerary.startDate" class="error">
+      La fecha de fin debe ser posterior a la de inicio.
+    </div>
 
     <div class="form-actions">
-      <button type="submit" [disabled]="itineraryForm.invalid">
-        <span class="material-icons" aria-hidden="true" style="font-size:18px;vertical-align:-3px;">
+      <button type="submit"
+        [disabled]="itineraryForm.invalid || (itinerary.endDate && itinerary.startDate && itinerary.endDate < itinerary.startDate)">
+        <span class="material-icons" style="font-size:18px;vertical-align:-3px;">
           {{ isEdit ? 'edit' : 'add' }}
         </span>
         {{ isEdit ? 'Actualizar' : 'Crear' }}

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-profile',
@@ -48,11 +49,23 @@ export class ProfileComponent implements OnInit {
         next: (exists) => {
           if (exists) {
             this.error = 'El nombre de usuario ya está en uso.';
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'El nombre de usuario ya está en uso.'
+            });
           } else {
             this.sendUpdate();
           }
         },
-        error: () => this.error = 'Error al verificar el nombre de usuario.'
+        error: () => {
+          this.error = 'Error al verificar el nombre de usuario.';
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Error al verificar el nombre de usuario.'
+          });
+        }
       });
     } else {
       this.sendUpdate();
@@ -64,8 +77,22 @@ export class ProfileComponent implements OnInit {
       next: () => {
         this.success = 'Perfil actualizado correctamente.';
         this.error = '';
+        Swal.fire({
+          icon: 'success',
+          title: 'Actualizado',
+          text: 'Perfil actualizado correctamente.',
+          timer: 1500,
+          showConfirmButton: false
+        });
       },
-      error: () => this.error = 'Error al actualizar el perfil.'
+      error: () => {
+        this.error = 'Error al actualizar el perfil.';
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Error al actualizar el perfil.'
+        });
+      }
     });
   }
 
@@ -81,8 +108,22 @@ export class ProfileComponent implements OnInit {
         this.error = '';
         this.currentPassword = '';
         this.newPassword = '';
+        Swal.fire({
+          icon: 'success',
+          title: 'Contraseña cambiada',
+          text: 'Contraseña cambiada correctamente.',
+          timer: 1500,
+          showConfirmButton: false
+        });
       },
-      error: () => this.error = 'Contraseña actual incorrecta o error al cambiarla.'
+      error: () => {
+        this.error = 'Contraseña actual incorrecta o error al cambiarla.';
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Contraseña actual incorrecta o error al cambiarla.'
+        });
+      }
     });
   }
 }

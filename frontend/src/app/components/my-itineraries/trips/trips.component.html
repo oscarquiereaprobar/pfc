@@ -10,7 +10,7 @@
           <th>Transporte</th>
           <th>Inicio</th>
           <th>Fin</th>
-          <th>Acciones</th>
+          <th *ngIf="isOwner">Acciones</th>
         </tr>
       </thead>
       <tbody>
@@ -20,12 +20,12 @@
           <td>{{ trip.transportType }}</td>
           <td>{{ trip.startDate | date:'dd/MM/yyyy' }}</td>
           <td>{{ trip.finishDate | date:'dd/MM/yyyy' }}</td>
-          <td>
+          <td *ngIf="isOwner">
             <button class="edit" (click)="editar(trip.id)">
-              <span class="material-icons" aria-hidden="true" style="font-size:18px;vertical-align:-3px;">edit</span> Editar
+              <span class="material-icons" aria-hidden="true" style="font-size:18px;vertical-align:-4px;">edit</span> Editar
             </button>
             <button class="delete" (click)="borrar(trip.id)">
-              <span class="material-icons" aria-hidden="true" style="font-size:18px;vertical-align:-3px;">delete</span> Borrar
+              <span class="material-icons" aria-hidden="true" style="font-size:18px;vertical-align:-4px;">delete</span> Borrar
             </button>
           </td>
         </tr>

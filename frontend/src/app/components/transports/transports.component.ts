@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { TransportService } from '../../services/transport.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-transports',
@@ -39,15 +40,35 @@ export class TransportsComponent implements OnInit {
   }
 
   borrarTransporte(id: number): void {
-    if (confirm('¿Deseas borrar este transporte?')) {
-      this.transportService.deleteTransport(id).subscribe({
-        next: () => {
-          this.transports = this.transports.filter(t => t.id !== id);
-        },
-        error: (err) => {
-          console.error('Error al borrar transporte:', err);
-        }
-      });
-    }
+    Swal.fire({
+      title: '¿Deseas borrar este transporte?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, borrar',
+      cancelButtonText: 'Cancelar'
+    }).then(result => {
+      if (result.isConfirmed) {
+        this.transportService.deleteTransport(id).subscribe({
+          next: () => {
+            this.transports = this.transports.filter(t => t.id !== id);
+            Swal.fire({
+              icon: 'success',
+              title: 'Eliminado',
+              text: 'Transporte borrado correctamente',
+              timer: 1500,
+              showConfirmButton: false
+            });
+          },
+          error: (err) => {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'Error al borrar transporte'
+            });
+            console.error('Error al borrar transporte:', err);
+          }
+        });
+      }
+    });
   }
 }

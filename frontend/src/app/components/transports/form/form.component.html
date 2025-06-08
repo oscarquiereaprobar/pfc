@@ -3,7 +3,10 @@
 
   <form (ngSubmit)="saveTransport()" #transportForm="ngForm">
     <label for="type">Tipo de transporte:</label>
-    <input type="text" id="type" name="type" [(ngModel)]="transport.type" required placeholder="Ej. Avión, Tren, Bus..."/>
+    <input type="text" id="type" name="type" [(ngModel)]="transport.type" required placeholder="Ej. Avión, Tren, Bus..." #type="ngModel"/>
+    <div *ngIf="type.invalid && (type.dirty || type.touched)" class="error">
+      <span *ngIf="type.errors?.['required']">El tipo de transporte es obligatorio.</span>
+    </div>
 
     <div class="form-actions">
       <button type="submit" [disabled]="transportForm.invalid">

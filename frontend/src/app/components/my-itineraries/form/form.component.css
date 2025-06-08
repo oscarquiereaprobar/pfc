@@ -63,7 +63,7 @@ button[type="submit"] {
   color: white;
 }
 
-button[type="submit"]:hover:not(:disabled) {
+button[type="submit"]:hover {
   background-color: #117e93;
 }
 
@@ -74,4 +74,12 @@ button.cancel {
 
 button.cancel:hover {
   background-color: #cfcfcf;
+}
+
+.error {
+  color: #e53935;
+  font-size: 0.97em;
+  margin-top: 0.3em;
+  margin-bottom: 0.2em;
+  padding-left: 0.2em;
 }
