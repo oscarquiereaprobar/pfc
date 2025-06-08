@@ -3,13 +3,22 @@
 
   <form (ngSubmit)="saveUser()" #userForm="ngForm" novalidate>
     <label>Username:</label>
-    <input [(ngModel)]="user.username" type="text" name="username" required />
+    <input [(ngModel)]="user.username" type="text" name="username" required #username="ngModel" />
+    <div *ngIf="username.invalid && (username.dirty || username.touched)" class="error">
+      <span *ngIf="username.errors?.['required']">El nombre de usuario es obligatorio.</span>
+    </div>
 
     <label>Nombre:</label>
-    <input [(ngModel)]="user.name" type="text" name="name" required />
+    <input [(ngModel)]="user.name" type="text" name="name" required #name="ngModel" />
+    <div *ngIf="name.invalid && (name.dirty || name.touched)" class="error">
+      <span *ngIf="name.errors?.['required']">El nombre es obligatorio.</span>
+    </div>
 
     <label>Apellido:</label>
-    <input [(ngModel)]="user.surname" type="text" name="surname" required />
+    <input [(ngModel)]="user.surname" type="text" name="surname" required #surname="ngModel" />
+    <div *ngIf="surname.invalid && (surname.dirty || surname.touched)" class="error">
+      <span *ngIf="surname.errors?.['required']">El apellido es obligatorio.</span>
+    </div>
 
     <label *ngIf="!isEdit">Contraseña:</label>
     <input *ngIf="!isEdit" type="password" [(ngModel)]="user.password" name="password" required />

@@ -90,7 +90,9 @@ button.cancel:hover {
 }
 
 .error {
-  margin-top: 1rem;
-  color: #d32f2f;
-  font-weight: 500;
+  color: #e53935;
+  font-size: 0.97em;
+  margin-top: 0.3em;
+  margin-bottom: 0.2em;
+  padding-left: 0.2em;
 }
