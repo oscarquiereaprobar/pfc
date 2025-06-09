@@ -41,4 +41,8 @@ export class HeaderComponent implements OnInit {
   goToAdminTransports(): void {
     this.router.navigate(['/transports']);
   }
+
+  goToAdminMessages(): void {
+    this.router.navigate(['/messages']);
+  }
 }

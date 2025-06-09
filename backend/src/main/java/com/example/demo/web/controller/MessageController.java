@@ -15,6 +15,12 @@ public class MessageController {
 
     private final MessageService messageService;
 
+    @GetMapping("/all")
+    public ResponseEntity<List<MessageDTO>> getAllMessages() {
+        List<MessageDTO> messages = messageService.getAllMessages();
+        return ResponseEntity.ok(messages);
+    }
+    
     @GetMapping("/itinerary/{itineraryId}")
     public ResponseEntity<List<MessageDTO>> getMessagesByItinerary(@PathVariable Long itineraryId) {
         List<MessageDTO> messages = messageService.getMessagesByItineraryId(itineraryId);

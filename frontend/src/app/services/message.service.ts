@@ -11,6 +11,10 @@ export class MessageService {
 
   constructor(private http: HttpClient) { }
 
+  getAll(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/all`);
+  }
+
   getByItinerary(itineraryId: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/itinerary/${itineraryId}`);
   }

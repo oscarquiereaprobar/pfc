@@ -21,7 +21,10 @@
     </div>
 
     <label *ngIf="!isEdit">Contraseña:</label>
-    <input *ngIf="!isEdit" type="password" [(ngModel)]="user.password" name="password" required />
+    <input *ngIf="!isEdit" type="password" [(ngModel)]="user.password" name="password" required #password="ngModel" />
+    <div *ngIf="!isEdit && userForm.controls?.['password']?.invalid && (userForm.controls?.['password']?.dirty || userForm.controls?.['password']?.touched)" class="error">
+      <span *ngIf="userForm.controls?.['password']?.errors?.['required']">La contraseña es obligatoria.</span>
+    </div>
 
     <label class="checkbox-label">
       ¿Administrador? <input type="checkbox" [(ngModel)]="user.admin" name="admin" />

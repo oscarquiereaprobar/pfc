@@ -1,0 +1,36 @@
+<div class="messages-container">
+  <div class="messages-header">
+    <h2>Gestión de Mensajes</h2>
+  </div>
+
+  <div class="table-wrapper">
+    <table *ngIf="!loading && messages.length > 0">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Usuario</th>
+          <th>Mensaje</th>
+          <th>Itinerario</th>
+          <th>Fecha</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let msg of messages">
+          <td>{{ msg.id }}</td>
+          <td>{{ msg.username }}</td>
+          <td>{{ msg.text }}</td>
+          <td>{{ msg.itinerary }}</td>
+          <td>{{ msg.createdAt | date:'short' }}</td>
+          <td class="actions">
+            <button class="delete" (click)="deleteMessage(msg.id)">
+              <span class="material-icons" aria-hidden="true" style="font-size:18px;vertical-align:-4px;">delete</span> Borrar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="loading" class="loading-msg">Cargando mensajes...</div>
+    <div *ngIf="!loading && messages.length === 0" class="empty-msg">No hay mensajes.</div>
+  </div>
+</div>

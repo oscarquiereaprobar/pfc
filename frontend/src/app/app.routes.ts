@@ -12,6 +12,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { UserFormComponent } from './components/users/form/form.component';
 import { UserViewComponent } from './components/users/view/view.component';
 import { TransportFormComponent } from './components/transports/form/form.component';
+import { MessagesComponent } from './components/messages/messages.component';
 import { AuthGuard } from './guards/auth.guard';
 import { AdminGuard } from './guards/admin.guard';
 import { UserGuard } from './guards/user.guard';
@@ -39,6 +40,7 @@ export const routes: Routes = [
   { path: 'transports', component: TransportsComponent, canActivate: [AuthGuard, AdminGuard] },
   { path: 'transports/add', component: TransportFormComponent, canActivate: [AuthGuard, AdminGuard] },
   { path: 'transports/edit/:id', component: TransportFormComponent, canActivate: [AuthGuard, AdminGuard] },
+  { path: 'messages', component: MessagesComponent, canActivate: [AuthGuard, AdminGuard] },
 
   { path: 'unauthorized', component: UnauthorizedComponent },
   { path: '**', redirectTo: 'unauthorized' }

@@ -33,24 +33,18 @@ export class TripFormComponent implements OnInit {
   transports: any[] = [];
   error = '';
 
-  countries: string[] = [];
-  citiesOrigin: string[] = [];
-  citiesDestination: string[] = [];
-
-  filteredCountries: string[] = [];
-  cities: string[] = [];
-  filteredCities: string[] = [];
-
+  allCountries: string[] = [];
+  countryCityMap: { [country: string]: string[] } = {};
   filteredOriginCountries: string[] = [];
   filteredOriginCities: string[] = [];
   filteredDestinationCountries: string[] = [];
   filteredDestinationCities: string[] = [];
-
-  allCountries: string[] = [];
-  countryCityMap: { [country: string]: string[] } = {};
+  citiesOrigin: string[] = [];
+  citiesDestination: string[] = [];
 
   isOwner: boolean = false;
   userId: number = 0;
+  existingTrips: any[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -58,7 +52,7 @@ export class TripFormComponent implements OnInit {
     private tripService: TripService,
     private transportService: TransportService,
     private locationService: LocationService,
-    private itineraryService: ItineraryService 
+    private itineraryService: ItineraryService
   ) {}
 
   ngOnInit(): void {
@@ -66,10 +60,12 @@ export class TripFormComponent implements OnInit {
     this.trip.idItinerary = this.itineraryId;
     this.userId = Number(sessionStorage.getItem('id'));
 
-    this.isOwner = false;
+    this.tripService.getByItineraryId(this.itineraryId).subscribe(trips => {
+      this.existingTrips = trips;
+    });
+
     this.itineraryService.getById(this.itineraryId).subscribe((itinerary: any) => {
       this.isOwner = itinerary.idUser === this.userId;
-
       const tripIdParam = this.route.snapshot.paramMap.get('tripId');
       if (tripIdParam) {
         this.isEdit = true;
@@ -77,18 +73,18 @@ export class TripFormComponent implements OnInit {
         this.tripService.getById(this.tripId).subscribe(trip => {
           this.trip = trip;
           if (!this.isOwner) {
-            alert('No tienes permiso para editar este viaje.');
+            Swal.fire({
+              icon: 'error',
+              title: 'Sin permiso',
+              text: 'No tienes permiso para editar este viaje.'
+            });
             this.router.navigate([`/itineraries/`]);
           } else {
             if (trip.originCountry) {
-              this.loadCities(trip.originCountry, 'origin', () => {
-                this.filteredOriginCities = this.citiesOrigin;
-              });
+              this.loadCities(trip.originCountry, 'origin');
             }
             if (trip.destinationCountry) {
-              this.loadCities(trip.destinationCountry, 'destination', () => {
-                this.filteredDestinationCities = this.citiesDestination;
-              });
+              this.loadCities(trip.destinationCountry, 'destination');
             }
           }
         });
@@ -101,11 +97,9 @@ export class TripFormComponent implements OnInit {
 
     this.locationService.getCountries().subscribe(res => {
       this.allCountries = res.data.map((c: any) => c.country);
-      this.countries = [...this.allCountries];
-      this.filteredCountries = [...this.allCountries];
-      this.countryCityMap = {};
       this.filteredOriginCountries = [...this.allCountries];
       this.filteredDestinationCountries = [...this.allCountries];
+      this.countryCityMap = {};
     });
   }
 
@@ -132,7 +126,7 @@ export class TripFormComponent implements OnInit {
     }
   }
 
-  loadCities(country: string, type: 'origin' | 'destination', callback?: () => void): void {
+  loadCities(country: string, type: 'origin' | 'destination'): void {
     this.error = '';
     if (!this.countryCityMap[country]) {
       this.locationService.getCities(country).subscribe({
@@ -145,7 +139,6 @@ export class TripFormComponent implements OnInit {
             this.citiesDestination = this.countryCityMap[country];
             this.filteredDestinationCities = [...this.citiesDestination];
           }
-          if (callback) callback();
         },
         error: err => {
           this.error = 'No se pudieron cargar las ciudades para este país. Puede que el servicio externo no esté disponible.';
@@ -159,7 +152,6 @@ export class TripFormComponent implements OnInit {
         this.citiesDestination = this.countryCityMap[country];
         this.filteredDestinationCities = [...this.citiesDestination];
       }
-      if (callback) callback();
     }
   }
 
@@ -174,6 +166,44 @@ export class TripFormComponent implements OnInit {
   }
 
   save(): void {
+    const newStart = new Date(this.trip.startDate);
+    const newEnd = new Date(this.trip.finishDate);
+
+    const tripsToCheck = this.isEdit && this.tripId
+      ? this.existingTrips.filter(trip => trip.id !== this.tripId)
+      : this.existingTrips;
+
+    const overlap = tripsToCheck.some(trip => {
+      const start = new Date(trip.startDate);
+      const end = new Date(trip.finishDate);
+      return (newStart < end && newEnd > start);
+    });
+
+    if (overlap) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Fechas solapadas',
+        text: 'Ya existe un viaje en ese intervalo de fechas.'
+      });
+      return;
+    }
+
+    const allTrips = [...tripsToCheck, { ...this.trip }];
+    allTrips.sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime());
+
+    for (let i = 1; i < allTrips.length; i++) {
+      const prevEnd = new Date(allTrips[i - 1].finishDate);
+      const currStart = new Date(allTrips[i].startDate);
+      if (currStart < prevEnd) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Orden incorrecto',
+          text: 'El inicio de un viaje debe ser igual o posterior al fin del viaje anterior.'
+        });
+        return;
+      }
+    }
+
     if (this.isEdit && this.tripId !== null) {
       this.tripService.update(this.tripId, this.trip).subscribe({
         next: () => {

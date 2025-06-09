@@ -12,5 +12,6 @@ import java.util.List;
 @Transactional
 @Repository
 public interface MessageRepository extends JpaRepository<Message, Long> {
+	List<Message> findAll();
     List<Message> findByItineraryId(Long itineraryId);
 }

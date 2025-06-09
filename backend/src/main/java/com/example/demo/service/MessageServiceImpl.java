@@ -23,6 +23,13 @@ public class MessageServiceImpl implements MessageService {
     private final UserRepository userRepository;
 
     @Override
+    public List<MessageDTO> getAllMessages() {
+        return messageRepository.findAll().stream()
+                .map(MessageDTO::convertToDTO)
+                .collect(Collectors.toList());
+    }
+    
+    @Override
     public List<MessageDTO> getMessagesByItineraryId(Long itineraryId) {
         return messageRepository.findByItineraryId(itineraryId).stream()
                 .map(MessageDTO::convertToDTO)

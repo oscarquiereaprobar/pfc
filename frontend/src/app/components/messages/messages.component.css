@@ -1,0 +1,110 @@
+.admin-messages-container {
+  max-width: 900px;
+  margin: 5vh auto;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+h2 {
+  text-align: center;
+  color: #169bb1;
+  margin-bottom: 2rem;
+}
+
+.messages-container {
+  padding: 2rem;
+  max-width: 1000px;
+  margin: 8vh auto;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+}
+
+.messages-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.messages-header h2 {
+  color: #169bb1;
+  margin: 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+th, td {
+  padding: 0.9rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #f5f9fa;
+  color: #169bb1;
+  font-weight: 600;
+}
+
+tr:hover {
+  background-color: #f0f8fa;
+}
+
+button {
+  background: #e53935;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.4em 1em;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.2em;
+}
+
+button.delete {
+  padding: 0.4rem 0.8rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  background-color: #dc3545;
+  color: white;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.2em;
+}
+
+button:hover {
+  background: #b71c1c;
+}
+
+button.delete:hover {
+  background-color: #c82333;
+}
+
+.loading-msg {
+  text-align: center;
+  color: #169bb1;
+  margin-top: 2em;
+}
+
+.empty-msg {
+  text-align: center;
+  color: #888;
+  margin-top: 2em;
+}

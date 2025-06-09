@@ -11,6 +11,7 @@
     <!-- Admin -->
     <button *ngIf="isAdmin" (click)="goToAdminUsers()">Usuarios</button>
     <button *ngIf="isAdmin" (click)="goToAdminTransports()">Transportes</button>
+    <button *ngIf="isAdmin" (click)="goToAdminMessages()">Mensajes</button>
 
     <button (click)="goToProfile()">Perfil</button>
     <button (click)="logout()">Cerrar sesión</button>
