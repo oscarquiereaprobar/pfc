@@ -55,6 +55,7 @@ public class ItineraryServiceImpl implements ItineraryService {
         itinerary.setName(dto.getName());
         itinerary.setStart_date(dto.getStartDate());
         itinerary.setEnd_date(dto.getEndDate());
+        itinerary.setImage(dto.getImage());
         return ItineraryDTO.convertToDTO(itineraryRepository.save(itinerary));
     }
 

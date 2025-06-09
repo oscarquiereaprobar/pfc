@@ -36,6 +36,9 @@ public class Itinerary {
     @Temporal(TemporalType.DATE)
     private Date end_date;
 
+    @Column(nullable = true, length = 512)
+    private String image;
+    
     @OneToMany(mappedBy = "itinerary", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Trip> trips;
     

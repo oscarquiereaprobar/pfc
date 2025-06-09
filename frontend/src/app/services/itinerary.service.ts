@@ -18,7 +18,6 @@ export class ItineraryService {
     return this.http.get<any[]>(`${this.apiUrl}/public/${userId}`);
   }
 
-
   getById(id: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/${id}`);
   }

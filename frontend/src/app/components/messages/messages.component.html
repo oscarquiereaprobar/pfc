@@ -4,7 +4,7 @@
   </div>
 
   <div class="table-wrapper">
-    <table *ngIf="!loading && messages.length > 0">
+    <table *ngIf="messages.length > 0">
       <thead>
         <tr>
           <th>ID</th>
@@ -30,7 +30,6 @@
         </tr>
       </tbody>
     </table>
-    <div *ngIf="loading" class="loading-msg">Cargando mensajes...</div>
-    <div *ngIf="!loading && messages.length === 0" class="empty-msg">No hay mensajes.</div>
+    <div *ngIf="messages.length === 0" class="empty-msg">No hay mensajes.</div>
   </div>
 </div>

@@ -23,6 +23,25 @@
       La fecha de fin debe ser posterior a la de inicio.
     </div>
 
+    <label for="image">Imagen:</label>
+    <div class="image-upload-wrapper">
+      <label class="custom-file-label">
+        <input type="file" id="image" (change)="onImageSelected($event)" accept="image/*" />
+        <span>
+          <span class="material-icons" style="vertical-align:middle;font-size:20px;">image</span>
+          {{ imageFile?.name || 'Seleccionar imagen...' }}
+        </span>
+      </label>
+      <span class="itinerary-img-span" *ngIf="itinerary.image">
+        <img
+          [src]="itinerary.image && itinerary.image.startsWith('img_') ? 'http://localhost:8888/api/itineraries/imagen/' + itinerary.image : itinerary.image"
+        />
+        <button type="button" class="delete-img-btn" (click)="removeImage()">
+          <span class="material-icons" style="font-size:18px;vertical-align:-4px;">delete</span> Quitar imagen
+        </button>
+      </span>
+    </div>
+
     <div class="form-actions">
       <button type="submit"
         [disabled]="itineraryForm.invalid || (itinerary.endDate && itinerary.startDate && itinerary.endDate < itinerary.startDate)">

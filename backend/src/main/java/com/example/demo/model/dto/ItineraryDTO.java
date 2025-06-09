@@ -15,12 +15,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class ItineraryDTO {
-	private Long id;
-	private String name;
+    private Long id;
+    private String name;
     private Long idUser;
     private Date startDate;
     private Date endDate;
-    
+    private String image;
+
     public static ItineraryDTO convertToDTO(Itinerary itinerary) {
         ItineraryDTO dto = new ItineraryDTO();
         dto.setId(itinerary.getId());
@@ -28,6 +29,7 @@ public class ItineraryDTO {
         dto.setIdUser(itinerary.getUser().getId());
         dto.setStartDate(itinerary.getStart_date());
         dto.setEndDate(itinerary.getEnd_date());
+        dto.setImage(itinerary.getImage());
         return dto;
     }
 
@@ -38,6 +40,7 @@ public class ItineraryDTO {
         itinerary.setUser(user);
         itinerary.setStart_date(dto.getStartDate());
         itinerary.setEnd_date(dto.getEndDate());
+        itinerary.setImage(dto.getImage());
         return itinerary;
     }
 }

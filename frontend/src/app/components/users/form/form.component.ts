@@ -36,7 +36,8 @@ export class UserFormComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.isEdit = true;
-      this.userService.getUserById(+id).subscribe(user => {
+      this.userId = +id;
+      this.userService.getUserById(this.userId).subscribe(user => {
         this.user = user;
       });
     }

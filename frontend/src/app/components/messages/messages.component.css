@@ -97,12 +97,6 @@ button.delete:hover {
   background-color: #c82333;
 }
 
-.loading-msg {
-  text-align: center;
-  color: #169bb1;
-  margin-top: 2em;
-}
-
 .empty-msg {
   text-align: center;
   color: #888;

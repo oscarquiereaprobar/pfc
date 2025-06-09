@@ -19,6 +19,7 @@ CREATE TABLE itinerary (
     id_user BIGINT UNSIGNED NOT NULL,
     start_date DATE NOT NULL,
     end_date DATE NOT NULL,
+    image VARCHAR(512),
     FOREIGN KEY (id_user) REFERENCES user(id) ON DELETE CASCADE
 );
 

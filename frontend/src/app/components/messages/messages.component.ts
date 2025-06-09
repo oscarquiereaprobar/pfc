@@ -13,9 +13,9 @@ import Swal from 'sweetalert2';
   styleUrl: './messages.component.css'
 })
 export class MessagesComponent implements OnInit {
-messages: any[] = [];
-  loading = false;
-
+  
+  messages: any[] = [];
+  
   constructor(
     private messageService: MessageService,
     private userService: UserService,
@@ -27,7 +27,6 @@ messages: any[] = [];
   }
 
   loadMessages(): void {
-    this.loading = true;
     this.messageService.getAll().subscribe({
       next: async (msgs) => {
         const userIds = Array.from(new Set(msgs.map((m: any) => m.userId)));
@@ -51,10 +50,8 @@ messages: any[] = [];
           username: userMap[m.userId] || m.userId,
           itinerary: itineraryMap[m.itineraryId] || m.itineraryId
         }));
-        this.loading = false;
       },
       error: () => {
-        this.loading = false;
         Swal.fire({ icon: 'error', title: 'Error', text: 'No se pudieron cargar los mensajes.' });
       }
     });
