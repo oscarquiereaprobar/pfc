@@ -39,7 +39,12 @@ export class MyItinerariesComponent implements OnInit {
             })
           )
         ).then(() => {
-          const sortedData = [...data].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+          const today = new Date();
+          const sortedData = [...data].sort((a, b) => {
+            const diffA = Math.abs(new Date(a.startDate).getTime() - today.getTime());
+            const diffB = Math.abs(new Date(b.startDate).getTime() - today.getTime());
+            return diffA - diffB;
+          });
           this.publicItineraries = sortedData.map(it => ({
             ...it,
             username: userMap[it.idUser] || it.idUser

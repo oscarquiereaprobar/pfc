@@ -88,10 +88,19 @@ export class TripsComponent implements OnInit {
           })
         )
       ).then(() => {
-        this.comments = comments.map((c: any) => ({
-          ...c,
-          username: userMap[c.userId] || c.userId
-        }));
+        this.comments = comments.map((c: any) => {
+          let adjustedCreatedAt = c.createdAt;
+          if (c.createdAt) {
+            const date = new Date(c.createdAt);
+            date.setHours(date.getHours() + 2);
+            adjustedCreatedAt = date.toISOString();
+          }
+          return {
+            ...c,
+            username: userMap[c.userId] || c.userId,
+            createdAt: adjustedCreatedAt
+          };
+        });
       });
     });
   }
