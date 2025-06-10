@@ -21,6 +21,7 @@ export class AuthService {
   isAuthenticated(): boolean {
     return sessionStorage.getItem('id') !== null;
   }
+  
 
   getRol(): string | null {
     return sessionStorage.getItem('rol');
