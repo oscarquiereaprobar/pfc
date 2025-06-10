@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 
 export class ItineraryService {
 
-  private apiUrl = 'http://localhost:8888/api/itineraries';
+  private apiUrl = 'http://http://desplieguedaw-hhhsfvaxa0ggardh.spaincentral-01.azurewebsites.net/api/itineraries';
 
   constructor(private http: HttpClient) {}
 

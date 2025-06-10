@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class TripService {
-  private apiUrl = 'http://localhost:8888/api/trips';
+  private apiUrl = 'http://http://desplieguedaw-hhhsfvaxa0ggardh.spaincentral-01.azurewebsites.net/api/trips';
 
   constructor(private http: HttpClient) {}
 

@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class MessageService {
 
-  private apiUrl = 'http://localhost:8888/api/messages';
+  private apiUrl = 'http://http://desplieguedaw-hhhsfvaxa0ggardh.spaincentral-01.azurewebsites.net/api/messages';
 
   constructor(private http: HttpClient) { }
 

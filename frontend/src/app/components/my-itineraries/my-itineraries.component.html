@@ -16,7 +16,7 @@
         <span class="itinerary-img-span" *ngIf="itinerary.image">
           <img
             [src]="itinerary.image && itinerary.image.startsWith('img_')
-              ? 'http://localhost:8888/api/itineraries/imagen/' + itinerary.image
+              ? 'http://desplieguedaw-hhhsfvaxa0ggardh.spaincentral-01.azurewebsites.net/api/itineraries/imagen/' + itinerary.image
               : itinerary.image === 'default.png'
               ? 'default.png'
               : itinerary.image"
@@ -54,7 +54,7 @@
         <span class="itinerary-img-span">
           <img 
             [src]="itinerary.image && itinerary.image.startsWith('img_')
-              ? 'http://localhost:8888/api/itineraries/imagen/' + itinerary.image
+              ? 'http://desplieguedaw-hhhsfvaxa0ggardh.spaincentral-01.azurewebsites.net/api/itineraries/imagen/' + itinerary.image
               : itinerary.image === 'default.png'
               ? 'default.png'
               : itinerary.image"

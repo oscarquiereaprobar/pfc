@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 
 export class AuthService {
 
-  private apiUrl = 'http://localhost:8888/api/auth';
+  private apiUrl = 'http://http://desplieguedaw-hhhsfvaxa0ggardh.spaincentral-01.azurewebsites.net/api/auth';
 
   constructor(private http: HttpClient) {}
 

@@ -61,13 +61,13 @@ export class ItineraryFormComponent implements OnInit {
       const uniqueName = `img_${Date.now()}.${ext}`;
 
       if (this.isEdit && this.previousImage && this.previousImage.startsWith('img_')) {
-        this.http.delete(`http://localhost:8888/api/itineraries/imagen/${this.previousImage}`).subscribe();
+        this.http.delete(`http://http://desplieguedaw-hhhsfvaxa0ggardh.spaincentral-01.azurewebsites.net/api/itineraries/imagen/${this.previousImage}`).subscribe();
       }
 
       const formData = new FormData();
       formData.append('file', file, uniqueName);
 
-      this.http.post('http://localhost:8888/api/itineraries/upload', formData, { responseType: 'text' })
+      this.http.post('http://http://desplieguedaw-hhhsfvaxa0ggardh.spaincentral-01.azurewebsites.net/api/itineraries/upload', formData, { responseType: 'text' })
         .subscribe({
           next: (res: any) => {
             if (typeof res === 'string') {
@@ -132,7 +132,7 @@ export class ItineraryFormComponent implements OnInit {
 
   removeImage(): void {
     if (this.isEdit && this.itinerary.image && this.itinerary.image.startsWith('img_')) {
-      this.http.delete(`http://localhost:8888/api/itineraries/imagen/${this.itinerary.image}`).subscribe();
+      this.http.delete(`http://http://desplieguedaw-hhhsfvaxa0ggardh.spaincentral-01.azurewebsites.net/api/itineraries/imagen/${this.itinerary.image}`).subscribe();
     }
     this.itinerary.image = 'img_default.png';
     this.imageFile = null;

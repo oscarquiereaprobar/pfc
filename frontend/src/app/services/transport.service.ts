@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class TransportService {
   
-  private apiUrl = 'http://localhost:8888/api/transports';
+  private apiUrl = 'http://http://desplieguedaw-hhhsfvaxa0ggardh.spaincentral-01.azurewebsites.net/api/transports';
 
   constructor(private http: HttpClient) {}
 
