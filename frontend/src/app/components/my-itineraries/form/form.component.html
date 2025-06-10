@@ -34,7 +34,7 @@
       </label>
       <span class="itinerary-img-span" *ngIf="itinerary.image">
         <img
-          [src]="itinerary.image && itinerary.image.startsWith('img_') ? 'http://desplieguedaw-hhhsfvaxa0ggardh.spaincentral-01.azurewebsites.net/api/itineraries/imagen/' + itinerary.image : itinerary.image"
+          [src]="itinerary.image && itinerary.image.startsWith('img_') ? 'https://desplieguedaw-hhhsfvaxa0ggardh.spaincentral-01.azurewebsites.net/api/itineraries/imagen/' + itinerary.image : itinerary.image"
         />
         <button type="button" class="delete-img-btn" (click)="removeImage()">
           <span class="material-icons" style="font-size:18px;vertical-align:-4px;">delete</span> Quitar imagen

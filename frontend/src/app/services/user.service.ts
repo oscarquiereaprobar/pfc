@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class UserService {
 
-  private apiUrl = 'http://http://desplieguedaw-hhhsfvaxa0ggardh.spaincentral-01.azurewebsites.net/api/users';
+  private apiUrl = 'https://desplieguedaw-hhhsfvaxa0ggardh.spaincentral-01.azurewebsites.net/api/users';
 
   constructor(private http: HttpClient) {}
 
