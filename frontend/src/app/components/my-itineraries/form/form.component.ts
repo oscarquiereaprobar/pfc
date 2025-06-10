@@ -79,7 +79,7 @@ export class ItineraryFormComponent implements OnInit {
                 title: 'Error',
                 text: 'Respuesta inesperada del servidor al subir la imagen'
               });
-              this.itinerary.image = 'img_default.png';
+              this.itinerary.image = 'default.png';
             }
           },
           error: (err) => {
@@ -88,7 +88,7 @@ export class ItineraryFormComponent implements OnInit {
               title: 'Error',
               text: 'No se pudo subir la imagen'
             });
-            this.itinerary.image = 'img_default.png';
+            this.itinerary.image = 'default.png';
             console.error('Error al subir imagen:', err);
           }
         });
@@ -97,7 +97,7 @@ export class ItineraryFormComponent implements OnInit {
 
   save(): void {
     if (!this.itinerary.image) {
-      this.itinerary.image = 'img_default.png';
+      this.itinerary.image = 'default.png';
     }
 
     const req = this.isEdit
@@ -134,7 +134,7 @@ export class ItineraryFormComponent implements OnInit {
     if (this.isEdit && this.itinerary.image && this.itinerary.image.startsWith('img_')) {
       this.http.delete(`https://desplieguedaw-hhhsfvaxa0ggardh.spaincentral-01.azurewebsites.net/api/itineraries/imagen/${this.itinerary.image}`).subscribe();
     }
-    this.itinerary.image = 'img_default.png';
+    this.itinerary.image = 'default.png';
     this.imageFile = null;
     this.previousImage = null;
   }
