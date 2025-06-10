@@ -63,8 +63,39 @@ public class ItineraryController {
         if (file.isEmpty()) {
             return ResponseEntity.badRequest().body("No file selected");
         }
+
+        String[] allowedExtensions = {"jpg", "jpeg", "png", "webp", "gif", "bmp", "svg"};
+        String[] allowedMimeTypes = {
+            "image/jpeg", "image/png", "image/webp", "image/gif", "image/bmp", "image/svg+xml"
+        };
+
         String ext = StringUtils.getFilenameExtension(file.getOriginalFilename());
-        String uniqueName = "img_" + System.currentTimeMillis() + "." + (ext != null ? ext : "png");
+        String mimeType = file.getContentType();
+
+        boolean validExt = false, validMime = false;
+        if (ext != null) {
+            ext = ext.toLowerCase();
+            for (String allowed : allowedExtensions) {
+                if (ext.equals(allowed)) {
+                    validExt = true;
+                    break;
+                }
+            }
+        }
+        if (mimeType != null) {
+            for (String allowed : allowedMimeTypes) {
+                if (mimeType.equalsIgnoreCase(allowed)) {
+                    validMime = true;
+                    break;
+                }
+            }
+        }
+
+        if (!validExt || !validMime) {
+            return ResponseEntity.badRequest().body("Formato de imagen no permitido");
+        }
+
+        String uniqueName = "img_" + System.currentTimeMillis() + "." + ext;
         try {
             Path dirPath = Paths.get(IMAGE_DIR).toAbsolutePath().normalize();
             Files.createDirectories(dirPath);
