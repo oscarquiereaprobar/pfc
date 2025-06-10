@@ -39,7 +39,8 @@ export class MyItinerariesComponent implements OnInit {
             })
           )
         ).then(() => {
-          this.publicItineraries = data.map(it => ({
+          const sortedData = [...data].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+          this.publicItineraries = sortedData.map(it => ({
             ...it,
             username: userMap[it.idUser] || it.idUser
           }));
@@ -50,9 +51,10 @@ export class MyItinerariesComponent implements OnInit {
   }
 
   filterPublicItineraries(): void {
-    this.filteredPublicItineraries = this.publicItineraries.filter(itinerary =>
-      itinerary.name.toLowerCase().includes(this.filter.toLowerCase())
-    );
+    this.filteredPublicItineraries = this.publicItineraries
+      .filter(itinerary =>
+        itinerary.name.toLowerCase().includes(this.filter.toLowerCase())
+      );
   }
 
   onFilterInput(): void {
